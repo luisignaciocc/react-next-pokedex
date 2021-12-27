@@ -1,14 +1,54 @@
-import '../styles/globals.css'
+import { useStore } from 'react-redux';
+import type { AppProps } from 'next/app';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import Head from 'next/head';
+import { ThemeProvider } from '@mui/material/styles';
+import { CacheProvider, EmotionCache } from '@emotion/react';
+import CssBaseline from '@mui/material/CssBaseline';
+import wrapper from 'src/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { Provider } from 'react-redux'
-import type { AppProps } from 'next/app'
+import createEmotionCache from '../styles/createEmotionCache';
+import theme from '../styles/theme';
+import React from 'react';
 
-import store from '../app/store'
+// Client-side cache, shared for the whole session of the user in the browser.
+const clientSideEmotionCache = createEmotionCache();
 
-export default function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  )
+interface MyAppProps extends AppProps {
+  emotionCache?: EmotionCache;
 }
+const apolloClient = new ApolloClient({
+  uri: 'https://beta.pokeapi.co/graphql/v1beta',
+  cache: new InMemoryCache(),
+});
+
+const App = function MyApp({
+  Component,
+  emotionCache = clientSideEmotionCache,
+  pageProps,
+}: MyAppProps) {
+  const store = useStore();
+  return (
+    <React.Fragment>
+      {/* // eslint-disable-next-line 
+      @ts-ignore */}
+      <PersistGate persistor={store.__persistor} loading={<h3>Loading...</h3>}>
+        <CacheProvider value={emotionCache}>
+          <Head>
+            <title>Pokedex</title>
+          </Head>
+          <ApolloProvider client={apolloClient}>
+            <ThemeProvider theme={theme}>
+              {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+              <CssBaseline />
+              <Component {...pageProps} />
+            </ThemeProvider>
+          </ApolloProvider>
+        </CacheProvider>
+      </PersistGate>
+    </React.Fragment>
+  );
+};
+
+export default wrapper.withRedux(App);

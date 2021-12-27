@@ -1,0 +1,285 @@
+//Mandatory Colors
+$red: #f44336;
+$blue: #1e88e5;
+$yellow: #fdd835;
+
+// Other Colors
+$brown: #4d1717;
+$darkred: #a62b26;
+$green: #91d6a6;
+$shadow: #be312c;
+//Mixins
+
+.content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.pokedex {
+  //margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: 70px;
+  height: 90px;
+  background-color: $brown;
+
+  border-radius: 15%;
+  border: 6px solid $brown;
+
+  display: grid;
+  grid-template-columns: 5px 1.5fr 1.5fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr 1fr;
+  grid-template-areas:
+    'top top top top top'
+    'rect rect triangle inverse scroll'
+    'space space space fill scroll'
+    'end end end end scroll';
+
+  .top {
+    grid-area: top;
+    display: flex;
+    align-items: center;
+
+    background-color: $red;
+
+    border-top: 2px solid #f37873;
+    border-radius: 5px 5px 0 0;
+
+    .camera {
+      width: 8px;
+      height: 8px;
+      margin-left: 5px;
+
+      background-image: linear-gradient($blue, white);
+
+      border-radius: 100%;
+      border: 1.5px solid #4d1717;
+    }
+
+    .lights {
+      width: 50%;
+      height: 90%;
+
+      margin-left: 3px;
+
+      display: flex;
+      align-items: center;
+
+      & > div {
+        width: 5px;
+        height: 5px;
+
+        border: 1.5px solid $brown;
+        border-radius: 100%;
+
+        margin-right: 2px;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .yellow {
+        background-color: $yellow;
+      }
+
+      .green {
+        background-color: $green;
+      }
+    }
+  }
+
+  .rect {
+    grid-area: rect;
+    background-color: $red;
+    border-bottom: 8px solid #4d1717;
+  }
+
+  .space {
+    grid-area: space;
+    border-top: 2px solid #f37873;
+    background-color: $red;
+
+    display: flex;
+    align-items: center;
+
+    .arrowBehind {
+      background-color: #4d1717;
+      margin-left: 5px;
+
+      &:after,
+      &:before {
+        content: '';
+        position: absolute;
+        background-color: inherit;
+      }
+
+      &,
+      &:before,
+      &:after {
+        width: 8px;
+        height: 8px;
+        border-top-right-radius: 30%;
+      }
+
+      & {
+        transform: rotate(-90deg) skewX(-30deg) scale(1, 0.866);
+      }
+
+      &:before {
+        transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707)
+          translate(0, -50%);
+      }
+
+      &:after {
+        transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414)
+          translate(50%);
+      }
+    }
+
+    .arrow {
+      position: relative;
+      background-color: $yellow;
+      left: -5.5px;
+      top: 1px;
+
+      &:after,
+      &:before {
+        content: '';
+        position: absolute;
+        background-color: inherit;
+      }
+
+      &,
+      &:before,
+      &:after {
+        width: 4px;
+        height: 4px;
+        border-top-right-radius: 30%;
+      }
+
+      & {
+        transform: rotate(-90deg) skewX(-30deg) scale(1, 0.866);
+      }
+
+      &:before {
+        transform: rotate(-135deg) skewX(-45deg) scale(1.414, 0.707)
+          translate(0, -50%);
+      }
+
+      &:after {
+        transform: rotate(135deg) skewY(-45deg) scale(0.707, 1.414)
+          translate(50%);
+      }
+    }
+  }
+
+  .scroll {
+    grid-area: scroll;
+    background-color: $darkred;
+    width: 50%;
+
+    border: 6px solid #4d1717;
+    border-top: 8px solid #4d1717 !important;
+    border-radius: 0 0 10px 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .bar {
+      height: 80%;
+      background-color: $red;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .squareTop,
+      .squareBottom {
+        background-image: linear-gradient(#ee3e37, #f27873);
+        width: 100%;
+        height: 5px;
+        border-top: 2px solid #4d1717;
+        border-bottom: 2px solid #4d1717;
+      }
+
+      .squareTop {
+        background-image: linear-gradient(#f27873, #ee3e37);
+      }
+
+      .squareBottom {
+        background-image: linear-gradient(#ee3e37, #f27873);
+      }
+    }
+  }
+
+  .fill {
+    grid-area: fill;
+    background-color: $red;
+  }
+
+  .triangle {
+    grid-area: triangle;
+    border-top: 7px solid $red;
+    border-right: 7px solid transparent;
+    padding-left: 10px;
+  }
+
+  .inverse {
+    grid-area: inverse;
+    border-bottom: 7px solid $red;
+    border-left: 7px solid transparent;
+  }
+
+  .end {
+    grid-area: end;
+    background-color: $red;
+
+    border-bottom: 2px solid #be312c;
+    border-radius: 0 0 0 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .strip {
+      background-color: $darkred;
+      width: 30px;
+      height: 2px;
+
+      border: 2px solid $brown;
+      border-radius: 30px;
+    }
+  }
+
+  animation-name: float;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.shadow {
+  width: 80px;
+  height: 10px;
+  background-color: $shadow;
+  margin-top: 0.5rem;
+
+  border-radius: 50%;
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-15px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}

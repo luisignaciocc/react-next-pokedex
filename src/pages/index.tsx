@@ -1,63 +1,53 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import type { NextPage } from 'next';
 
-import Counter from '../features/counter/Counter'
-import styles from '../styles/Home.module.css'
+import { Container, Grid } from '@mui/material';
+import { Box } from '@mui/system';
+import { Link } from 'src/components/layout';
+import { css, keyframes } from '@emotion/react';
+import { float } from 'src/styles/animations';
 
-const IndexPage: NextPage = () => {
+const WelcomePage: NextPage = () => {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Redux Toolkit</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <header className={styles.header}>
-        <img src="/logo.svg" className={styles.logo} alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className={styles.link}
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className={styles.link}
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className={styles.link}
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
-  )
-}
+    <Box
+      component="main"
+      sx={{
+        backgroundImage: 'url(images/welcome-background.png)',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+        backgroundPosition: 'bottom',
+        textAlign: 'center',
+      }}
+    >
+      <Container maxWidth="lg">
+        <Grid
+          container
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          height="calc(100vh + 16px)"
+        >
+          <Grid item xs={12} sm={6}>
+            <img src="images/pokemon-logo.png" alt="Pokemon" width={'100%'} />
+          </Grid>
+          <Grid item xs={12}>
+            <Link href="/pokedex">
+              <img
+                css={css`
+                  animation: ${float} 6s ease-in-out infinite;
+                `}
+                src="images/start.png"
+                alt="Start"
+                width={300}
+              />
+            </Link>
+          </Grid>
+          <Grid item xs={12}>
+            <img src="images/pikachu-running.gif" alt="" width={200} />
+          </Grid>
+        </Grid>
+      </Container>
+    </Box>
+  );
+};
 
-export default IndexPage
+export default WelcomePage;
