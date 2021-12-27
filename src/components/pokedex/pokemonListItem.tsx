@@ -11,6 +11,7 @@ import { getTypeColor } from 'src/utils/functions';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { Bullet } from '.';
+import { useRouter } from 'next/router';
 
 interface Props {
   id: number;
@@ -31,11 +32,14 @@ const PokemonListItem = (props: Props) => {
   const { id, name, generation, types, opacity, isFavorite, markAsFavorite } =
     props;
 
-  const shake = () => {
+  const router = useRouter();
+
+  const view = (id: number) => {
     setWasClicked(true);
     setTimeout(() => {
       setWasClicked(false);
-    }, 100);
+      router.push(`/pokedex/${id}`);
+    }, 80);
   };
   return (
     <ListItem
@@ -52,8 +56,9 @@ const PokemonListItem = (props: Props) => {
       onMouseOut={() => setIsHovered(false)}
     >
       <ListItemAvatar
+        sx={{ cursor: 'pointer' }}
         onClick={() => {
-          shake();
+          view(id);
         }}
       >
         <Avatar
@@ -69,8 +74,9 @@ const PokemonListItem = (props: Props) => {
         </Avatar>
       </ListItemAvatar>
       <ListItemText
+        sx={{ cursor: 'pointer' }}
         onClick={() => {
-          shake();
+          view(id);
         }}
         primary={
           <>

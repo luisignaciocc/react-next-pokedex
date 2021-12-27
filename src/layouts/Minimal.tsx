@@ -17,7 +17,7 @@ const Minimal = (props: {
         sx={{
           p: 4,
           minHeight: 'calc(100vh - 64px)',
-          backgroundImage: 'url(images/pokedex-background.jpg)',
+          backgroundImage: 'url(/images/pokedex-background.jpg)',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'fixed',
           backgroundPosition: 'center',

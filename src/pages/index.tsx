@@ -2,7 +2,7 @@ import type { NextPage } from 'next';
 
 import { Container, Grid } from '@mui/material';
 import { Box } from '@mui/system';
-import { Link } from 'src/components/layout';
+import { Link } from 'src/components';
 import { css, keyframes } from '@emotion/react';
 import { float } from 'src/styles/animations';
 
@@ -11,7 +11,7 @@ const WelcomePage: NextPage = () => {
     <Box
       component="main"
       sx={{
-        backgroundImage: 'url(images/welcome-background.png)',
+        backgroundImage: 'url(/images/welcome-background.png)',
         backgroundRepeat: 'no-repeat',
         backgroundAttachment: 'fixed',
         backgroundPosition: 'bottom',

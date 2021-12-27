@@ -14,14 +14,18 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
           />
           <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Press Start 2P"
+          />
+          <link
             rel="preload"
             as="image"
-            href="images/pokedex-background.jpg"
+            href="/images/pokedex-background.jpg"
           ></link>
           <link
             rel="preload"
             as="image"
-            href="images/welcome-background.png"
+            href="/images/welcome-background.png"
           ></link>
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}

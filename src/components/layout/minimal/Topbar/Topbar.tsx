@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppBar, Toolbar } from '@mui/material';
-import { Link } from 'src/components/layout';
+import { Link } from 'src/components';
 
 const Topbar = (): React.ReactElement => {
   return (

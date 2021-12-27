@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useQuery } from '@apollo/client';
 import {
   Pokemon,
@@ -5,11 +6,14 @@ import {
   PokemonGenerationsData,
   PokemonsListData,
   PokemonsTypesData,
+  PokemonDetails,
   POKEMONS_GENERATIONS_QUERY,
   POKEMONS_LIST_QUERY,
   POKEMONS_TYPES_QUERY,
   PokemonType,
 } from '../utils';
+
+const API_REST_URL = 'https://pokeapi.co/api/v2';
 
 export const getPokemons = (): Pokemon[] => {
   const { loading, error, data } =
@@ -46,4 +50,17 @@ export const getPokemonGenerations = (): PokemonGeneration[] => {
     return [];
   }
   return data.pokemon_v2_generation;
+};
+
+export const getPokemonDetails = async (
+  id: number,
+): Promise<PokemonDetails> => {
+  return axios
+    .get(API_REST_URL + `/pokemon/${id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
