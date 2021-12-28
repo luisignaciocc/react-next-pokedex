@@ -14,11 +14,11 @@ import withLayout from 'src/hocs/withLayout';
 import { getPokemonDetails, getPokemonsIds } from 'src/services';
 import { getTypeColor, PokemonDetails } from 'src/utils';
 import React from 'react';
-import { StatsChart } from 'src/components';
+import { ImageWithFallback, StatsChart } from 'src/components';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
-import { useAppDispatch, useFavorites } from 'src/hooks';
+import { useAppDispatch, useFavorites, useIsWidthDown } from 'src/hooks';
 import { setFavorites } from 'src/redux/slices';
 import { useRouter } from 'next/router';
 
@@ -46,6 +46,7 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
   const router = useRouter();
   const dispatch = useAppDispatch();
   const favorites = useFavorites();
+  const isDownMd = useIsWidthDown('md');
 
   const isFavorite = favorites.includes(id);
 
@@ -110,7 +111,7 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
           direction="column"
           xs={12}
           md={6}
-          sx={{ minHeight: { md: '515px' } }}
+          sx={{ minHeight: { md: '550px' } }}
         >
           <Grid
             item
@@ -128,10 +129,13 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
               border: 'rgba(92, 101, 101, 1) groove 5px',
               borderRadius: '8px',
               textAlign: 'center',
+              p: 3,
             }}
           >
-            <Image
+            <ImageWithFallback
+              key={id}
               src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`}
+              fallbackSrc="/images/pokeball-0.png"
               alt="Pokemon"
               width={400}
               height={400}
@@ -177,10 +181,17 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
               #{id} ~ {name.replace('-', ' - ')}
             </Typography>
           </Grid>
-          <Grid item container direction="column" xs={12} md={6}>
+          <Grid
+            item
+            container
+            direction={!isDownMd ? 'column' : 'row'}
+            xs={12}
+            md={6}
+          >
             <Grid
               item
-              xs={6}
+              xs={12}
+              md={6}
               sx={{
                 backgroundColor: '#444',
                 border: 'rgba(92, 101, 101, 1) groove 5px',
@@ -198,7 +209,8 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
             </Grid>
             <Grid
               item
-              xs={6}
+              xs={12}
+              md={6}
               sx={{
                 backgroundColor: '#444',
                 border: 'rgba(92, 101, 101, 1) groove 5px',
