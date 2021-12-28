@@ -61,7 +61,7 @@ const PokemonsPage: NextPage<{
       filteringIsFavorite,
       page,
     );
-    if (totalPages < page && pokemons.length > 0) {
+    if (totalPages < page) {
       setPage(1);
     }
     return {
