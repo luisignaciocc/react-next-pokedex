@@ -112,10 +112,13 @@ const PokemonListToolbar = (props: Props) => {
         width: '100%',
       }}
     >
-      <Box sx={{ m: 1, ml: 3 }}>
+      <Box sx={{ m: 1, ml: 3, display: { xs: 'none', sm: 'block' } }}>
         <img src="images/pokedex-letters.png" alt="Pokemon" width={270} />
       </Box>
-      <Box component="span" sx={{ flex: 'auto' }} />
+      <Box
+        component="span"
+        sx={{ flex: 'auto', display: { xs: 'none', sm: 'block' } }}
+      />
       <Paper
         sx={{
           p: '2px 2px',

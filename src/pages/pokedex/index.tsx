@@ -17,6 +17,7 @@ import {
   useFilteredGenerations,
   useFilteredTypes,
   useFilteringIsFavorite,
+  useIsWidthUp,
 } from 'src/hooks';
 import {
   apolloClient,
@@ -45,6 +46,7 @@ const PokemonsPage: NextPage<{
   const filteredGenerations = useFilteredGenerations();
   const filteredTypes = useFilteredTypes();
   const filteringIsFavorite = useFilteringIsFavorite();
+  const isUpLg = useIsWidthUp('lg');
   const isDownMd = useIsWidthDown('md');
   const isDownSm = useIsWidthDown('sm');
 
@@ -123,7 +125,7 @@ const PokemonsPage: NextPage<{
           fetchedPokemonGenerations={fetchedPokemonGenerations}
           fetchedPokemonTypes={fetchedPokemonTypes}
         />
-        <ImageList cols={isDownMd ? (isDownSm ? 1 : 3) : 4}>
+        <ImageList cols={isDownMd ? (isDownSm ? 1 : 2) : isUpLg ? 4 : 3}>
           {pokemons.map((pokemon) => (
             <PokemonListItem
               key={pokemon.id}
