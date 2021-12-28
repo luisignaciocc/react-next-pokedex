@@ -45,6 +45,13 @@ export type PokemonGenerationsData = {
   pokemon_v2_generation: PokemonGeneration[];
 };
 
+export type PokemonIdsData = {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: { name: string; url: string }[];
+};
+
 export type PokemonDetails = {
   abilities: {
     ability: {

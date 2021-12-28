@@ -11,6 +11,7 @@ import {
   POKEMONS_LIST_QUERY,
   POKEMONS_TYPES_QUERY,
   PokemonType,
+  PokemonIdsData,
 } from '../utils';
 
 const API_REST_URL = 'https://pokeapi.co/api/v2';
@@ -65,9 +66,9 @@ export const getPokemonDetails = async (
     });
 };
 
-export const getPokemonsIds = async (id: number): Promise<PokemonDetails> => {
+export const getPokemonsIds = async (): Promise<PokemonIdsData> => {
   return axios
-    .get(API_REST_URL + `/pokemon/${id}`)
+    .get(API_REST_URL + `/pokemon?limit=2000`)
     .then((response) => {
       return response.data;
     })

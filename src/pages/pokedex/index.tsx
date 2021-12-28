@@ -8,7 +8,6 @@ import {
 } from 'src/components/pokedex';
 
 import withLayout from 'src/hocs/withLayout';
-import { filterPokemons, formatPokemons } from 'src/utils/functions';
 import {
   useAppDispatch,
   useFavorites,
@@ -30,6 +29,8 @@ import {
   POKEMONS_LIST_QUERY,
   POKEMONS_TYPES_QUERY,
   PokemonType,
+  filterPokemons,
+  formatPokemons,
 } from 'src/utils';
 import { setFavorites } from 'src/redux/slices';
 

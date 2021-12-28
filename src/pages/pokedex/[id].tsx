@@ -1,39 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { Grid, Paper, Typography } from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 
 import withLayout from 'src/hocs/withLayout';
-import { Loader } from 'src/components/pokedex';
-import { getPokemonDetails } from 'src/services';
-import { getTypeColor } from 'src/utils/functions';
-// import {
-//   useIsWidthDown,
-// } from 'src/hooks';
+import { getPokemonDetails, getPokemonsIds } from 'src/services';
+import { getTypeColor, PokemonDetails } from 'src/utils';
 
-const PokemonPage: NextPage = () => {
-  const [pokemonName, setPokemonName] = useState('');
-  const [pokemonTypes, setPokemonTypes] = useState([]);
+const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
+  pokemonDetails,
+}) => {
+  const id = pokemonDetails.id;
+  const pokemonName = pokemonDetails.name;
+  const pokemonTypes = pokemonDetails.types;
 
-  //   const isDownMd = useIsWidthDown('md');
-  //   const isDownSm = useIsWidthDown('sm');
-  const router = useRouter();
-
-  const { id } = router.query;
-
-  useEffect(() => {
-    if (id) init();
-  }, [id]);
-
-  const init = async () => {
-    const pokemonDetails = await getPokemonDetails(+id);
-    console.log(pokemonDetails);
-    setPokemonName(pokemonDetails.name);
-    setPokemonTypes(pokemonDetails.types);
-  };
-
-  return id ? (
+  return (
     <Paper
       sx={{
         backgroundColor: pokemonTypes[0]
@@ -71,9 +51,29 @@ const PokemonPage: NextPage = () => {
         </Grid>
       </Grid>
     </Paper>
-  ) : (
-    <Loader />
   );
 };
+
+export async function getStaticPaths() {
+  const res = await getPokemonsIds();
+  const pokemons = res.results;
+
+  const paths = [];
+
+  pokemons.map((pokemon) => {
+    paths.push({
+      params: {
+        id: pokemon.url.split('/')[6],
+      },
+    });
+  });
+
+  return { paths, fallback: false };
+}
+
+export async function getStaticProps({ params }) {
+  const pokemonDetails = await getPokemonDetails(params.id);
+  return { props: { pokemonDetails } };
+}
 
 export default withLayout(PokemonPage, 'minimal');
