@@ -110,12 +110,12 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
           direction="column"
           xs={12}
           md={6}
+          sx={{ minHeight: { md: '515px' } }}
         >
           <Grid
             item
-            xs={9}
-            sm={10}
-            md={11}
+            md={10}
+            lg={11}
             sx={{
               background: `
                 repeating-linear-gradient(
@@ -141,7 +141,8 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
             item
             container
             justifyContent="space-evenly"
-            xs={1}
+            md={2}
+            lg={1}
             sx={{
               backgroundColor: '#444',
               border: 'rgba(92, 101, 101, 1) groove 5px',
@@ -176,7 +177,7 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
               #{id} ~ {name.replace('-', ' - ')}
             </Typography>
           </Grid>
-          <Grid item container direction="column" xs={6}>
+          <Grid item container direction="column" xs={12} md={6}>
             <Grid
               item
               xs={6}
@@ -220,11 +221,14 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
           </Grid>
           <Grid
             item
-            xs={6}
+            xs={12}
+            md={6}
             sx={{
               backgroundColor: '#444',
               border: 'rgba(92, 101, 101, 1) groove 5px',
               borderRadius: '8px',
+              p: 1,
+              pl: 2,
             }}
           >
             <StatsChart data={statsValues} labels={statsLabels} />

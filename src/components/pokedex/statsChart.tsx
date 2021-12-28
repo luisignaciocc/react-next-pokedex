@@ -24,6 +24,8 @@ interface Props {
 }
 
 const StatsChart = ({ labels, data }: Props) => {
+  [labels[0], labels[4]] = [labels[4], labels[0]];
+  [data[0], data[4]] = [data[4], data[0]];
   const chartData = {
     labels,
     datasets: [
