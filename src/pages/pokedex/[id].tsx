@@ -301,7 +301,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const pokemonDetails = await getPokemonDetails(params.id);
+  const { moves, ...pokemonDetails } = await getPokemonDetails(params.id);
   return { props: { pokemonDetails } };
 }
 

@@ -17,6 +17,7 @@ import {
   useFilteredTypes,
   useFilteringIsFavorite,
   useIsWidthUp,
+  usePage,
 } from 'src/hooks';
 import {
   apolloClient,
@@ -32,14 +33,14 @@ import {
   filterPokemons,
   formatPokemons,
 } from 'src/utils';
-import { setFavorites } from 'src/redux/slices';
+import { setFavorites, setPage } from 'src/redux/slices';
 
 const PokemonsPage: NextPage<{
   fetchedPokemons: Pokemon[];
   fetchedPokemonTypes: PokemonType[];
   fetchedPokemonGenerations: PokemonGeneration[];
 }> = ({ fetchedPokemons, fetchedPokemonTypes, fetchedPokemonGenerations }) => {
-  const [page, setPage] = useState(1);
+  const page = usePage();
 
   const dispatch = useAppDispatch();
   const favorites = useFavorites();
@@ -62,7 +63,7 @@ const PokemonsPage: NextPage<{
       page,
     );
     if (totalPages < page) {
-      setPage(1);
+      dispatch(setPage(1));
     }
     return {
       pokemons: paginatedPokemons,
@@ -86,7 +87,7 @@ const PokemonsPage: NextPage<{
     _event: React.ChangeEvent<unknown>,
     value: number,
   ) => {
-    setPage(value);
+    dispatch(setPage(value));
   };
 
   const handleCheckAsFavorite = (

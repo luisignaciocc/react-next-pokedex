@@ -7,6 +7,7 @@ export interface FilterState {
   filteredGenerations: number[];
   filteredTypes: number[];
   filteringIsFavorite: boolean;
+  page: number;
 }
 
 const initialState: FilterState = {
@@ -14,6 +15,7 @@ const initialState: FilterState = {
   filteredGenerations: [],
   filteredTypes: [],
   filteringIsFavorite: false,
+  page: 1,
 };
 
 export const filterSlice = createSlice({
@@ -32,6 +34,9 @@ export const filterSlice = createSlice({
     setFilteringIsFavorite: (state, action: PayloadAction<boolean>) => {
       state.filteringIsFavorite = action.payload;
     },
+    setPage: (state, action: PayloadAction<number>) => {
+      state.page = action.payload;
+    },
   },
 });
 
@@ -40,6 +45,7 @@ export const {
   setFilteredGenerations,
   setFilteredTypes,
   setFilteringIsFavorite,
+  setPage,
 } = filterSlice.actions;
 
 export const selectSearchState = (state: RootState): string =>
@@ -53,5 +59,7 @@ export const selectFilteredTypes = (state: RootState): number[] =>
 
 export const selectFilteringIsFavorite = (state: RootState): boolean =>
   state.filter.filteringIsFavorite;
+
+export const selectPage = (state: RootState): number => state.filter.page;
 
 export const filterReducer = filterSlice.reducer;

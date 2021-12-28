@@ -3,6 +3,7 @@ import {
   selectFilteredTypes,
   selectSearchState,
   selectFilteringIsFavorite,
+  selectPage,
 } from 'src/redux/slices';
 import { useAppSelector } from './useRedux';
 
@@ -15,3 +16,5 @@ export const useSearchState = () => useAppSelector(selectSearchState);
 
 export const useFilteringIsFavorite = () =>
   useAppSelector(selectFilteringIsFavorite);
+
+export const usePage = () => useAppSelector(selectPage);
