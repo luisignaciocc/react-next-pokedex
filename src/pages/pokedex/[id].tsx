@@ -1,30 +1,26 @@
-import { Box, Grid, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Checkbox,
+  Grid,
+  IconButton,
+  Paper,
+  Typography,
+  Tooltip,
+} from '@mui/material';
 import type { NextPage } from 'next';
 import Image from 'next/image';
 
 import withLayout from 'src/hocs/withLayout';
 import { getPokemonDetails, getPokemonsIds } from 'src/services';
 import { getTypeColor, PokemonDetails } from 'src/utils';
-import {
-  Chart as ChartJS,
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-} from 'chart.js';
 import React from 'react';
 import { StatsChart } from 'src/components';
-
-ChartJS.register(
-  RadialLinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-);
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
+import Favorite from '@mui/icons-material/Favorite';
+import { useAppDispatch, useFavorites } from 'src/hooks';
+import { setFavorites } from 'src/redux/slices';
+import { useRouter } from 'next/router';
 
 const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
   pokemonDetails,
@@ -47,12 +43,61 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
     image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${item.item.name}.png`,
   }));
 
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const favorites = useFavorites();
+
+  const isFavorite = favorites.includes(id);
+
+  const handleCheckAsFavorite = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    id: number,
+  ) => {
+    const current = favorites;
+    if (event.target.checked) {
+      const newFavorites = [...current, id];
+      dispatch(setFavorites(newFavorites));
+    } else {
+      const newFavorites = current.filter((value) => {
+        return value !== id;
+      });
+      dispatch(setFavorites(newFavorites));
+    }
+  };
+
   return (
     <Paper
       sx={{
         backgroundColor: 'rgba(220, 20, 60, 0.4)',
+        borderRadius: '13px',
       }}
     >
+      <Box
+        sx={{
+          position: 'absolute',
+          backgroundColor: 'rgba(68, 68, 68, 0.9)',
+          borderRadius: '13px 0px',
+        }}
+      >
+        <Tooltip title="Volver">
+          <IconButton
+            size="large"
+            onClick={() => {
+              router.push(`/pokedex`);
+            }}
+          >
+            <ArrowBackIcon fontSize="inherit" />
+          </IconButton>
+        </Tooltip>
+
+        <Checkbox
+          checked={isFavorite}
+          onChange={(e) => handleCheckAsFavorite(e, id)}
+          icon={<FavoriteBorder />}
+          checkedIcon={<Favorite />}
+          color="secondary"
+        />
+      </Box>
       <Grid
         container
         sx={{ border: 'rgb(220, 20, 60) solid 5px', borderRadius: '13px' }}

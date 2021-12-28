@@ -81,9 +81,8 @@ const PokemonListItem = (props: Props) => {
         primary={
           <>
             <Typography variant="h6">{name}</Typography>
-            <Typography variant="caption">
-              #{id} ~ {generation}
-            </Typography>
+            <Typography variant="button">#{id}</Typography>
+            <Typography variant="body1">{generation}</Typography>
           </>
         }
         secondary={types.map((type, i) => (
