@@ -15,6 +15,21 @@ const theme = createTheme({
         fontSize: '0.6rem',
       },
     },
+    h6: {
+      '@media (max-width:425px)': {
+        fontSize: '1rem',
+      },
+    },
+    button: {
+      '@media (max-width:425px)': {
+        fontSize: '0.6rem',
+      },
+    },
+    body1: {
+      '@media (max-width:425px)': {
+        fontSize: '0.8rem',
+      },
+    },
     subtitle2: {
       fontFamily: `"Press Start 2P"`,
       '@media (max-width:425px)': {

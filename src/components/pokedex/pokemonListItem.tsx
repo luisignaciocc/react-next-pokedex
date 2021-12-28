@@ -12,6 +12,8 @@ import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import { Bullet } from '.';
 import { useRouter } from 'next/router';
+import Image from 'next/image';
+import { useIsWidthDown } from 'src/hooks';
 
 interface Props {
   id: number;
@@ -33,6 +35,7 @@ const PokemonListItem = (props: Props) => {
     props;
 
   const router = useRouter();
+  const isDownSm = useIsWidthDown('sm');
 
   const view = (id: number) => {
     router.push(`/pokedex/${id}`);
@@ -65,12 +68,17 @@ const PokemonListItem = (props: Props) => {
           alt={name}
           src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`}
           sx={{
-            width: 96,
-            height: 96,
+            width: isDownSm ? 46 : 96,
+            height: isDownSm ? 46 : 96,
             backgroundColor: 'transparent',
           }}
         >
-          <img src="images/pokeball.png" alt="Pokemon" width={46} />
+          <Image
+            src="/images/pokeball.png"
+            alt="Pokemon"
+            width={46}
+            height={46}
+          />
         </Avatar>
       </ListItemAvatar>
       <ListItemText
@@ -81,7 +89,12 @@ const PokemonListItem = (props: Props) => {
         primary={
           <>
             <Typography variant="h6">{name}</Typography>
-            <Typography variant="button">#{id}</Typography>
+            <Typography
+              variant="button"
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              #{id}
+            </Typography>
             <Typography variant="body1">{generation}</Typography>
           </>
         }
@@ -90,6 +103,7 @@ const PokemonListItem = (props: Props) => {
         ))}
       />
       <Checkbox
+        size="small"
         checked={isFavorite}
         onChange={(e) => markAsFavorite(e, id)}
         icon={<FavoriteBorder />}

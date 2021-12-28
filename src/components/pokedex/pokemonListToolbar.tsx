@@ -28,6 +28,7 @@ import {
   setFilteredGenerations,
   setFilteredTypes,
 } from 'src/redux/slices';
+import Image from 'next/image';
 
 interface Props {
   fetchedPokemonTypes: PokemonType[];
@@ -113,7 +114,12 @@ const PokemonListToolbar = (props: Props) => {
       }}
     >
       <Box sx={{ m: 1, ml: 3, display: { xs: 'none', sm: 'block' } }}>
-        <img src="images/pokedex-letters.png" alt="Pokemon" width={270} />
+        <Image
+          src="/images/pokedex-letters.png"
+          alt="Pokedex"
+          width={270}
+          height={56.8}
+        />
       </Box>
       <Box
         component="span"
