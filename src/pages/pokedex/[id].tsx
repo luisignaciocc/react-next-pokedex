@@ -173,7 +173,7 @@ const PokemonPage: NextPage<{ pokemonDetails: PokemonDetails }> = ({
             }}
           >
             <Typography variant="h4">
-              #{id} - {name}
+              #{id} ~ {name.replace('-', ' - ')}
             </Typography>
           </Grid>
           <Grid item container direction="column" xs={6}>
