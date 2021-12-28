@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ImageList, Paper, Pagination, Stack } from '@mui/material';
 import type { NextPage } from 'next';
 import {
@@ -8,7 +8,6 @@ import {
 } from 'src/components/pokedex';
 
 import withLayout from 'src/hocs/withLayout';
-import { getPokemons } from 'src/services';
 import { filterPokemons, formatPokemons } from 'src/utils/functions';
 import {
   useAppDispatch,
@@ -19,13 +18,26 @@ import {
   useFilteredTypes,
   useFilteringIsFavorite,
 } from 'src/hooks';
-import { FormattedPokemon } from 'src/utils';
+import {
+  apolloClient,
+  Pokemon,
+  PokemonGeneration,
+  PokemonGenerationsData,
+  PokemonsListData,
+  PokemonsTypesData,
+  POKEMONS_GENERATIONS_QUERY,
+  POKEMONS_LIST_QUERY,
+  POKEMONS_TYPES_QUERY,
+  PokemonType,
+} from 'src/utils';
 import { setFavorites } from 'src/redux/slices';
 
-const PokemonsPage: NextPage = () => {
+const PokemonsPage: NextPage<{
+  fetchedPokemons: Pokemon[];
+  fetchedPokemonTypes: PokemonType[];
+  fetchedPokemonGenerations: PokemonGeneration[];
+}> = ({ fetchedPokemons, fetchedPokemonTypes, fetchedPokemonGenerations }) => {
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [pokemons, setPokemons] = useState<FormattedPokemon[]>([]);
 
   const dispatch = useAppDispatch();
   const favorites = useFavorites();
@@ -35,20 +47,6 @@ const PokemonsPage: NextPage = () => {
   const filteringIsFavorite = useFilteringIsFavorite();
   const isDownMd = useIsWidthDown('md');
   const isDownSm = useIsWidthDown('sm');
-
-  const fetchedPokemons = getPokemons();
-
-  useEffect(() => {
-    filter();
-  }, [
-    fetchedPokemons.length,
-    filteredGenerations.length,
-    filteredTypes.length,
-    page,
-    searchState,
-    filteringIsFavorite,
-    favorites.length,
-  ]);
 
   const filter = () => {
     const formatedPokemons = formatPokemons(fetchedPokemons, favorites);
@@ -60,12 +58,26 @@ const PokemonsPage: NextPage = () => {
       filteringIsFavorite,
       page,
     );
-    setPokemons(paginatedPokemons);
-    setTotalPages(totalPages);
     if (totalPages < page && pokemons.length > 0) {
       setPage(1);
     }
+    return {
+      pokemons: paginatedPokemons,
+      totalPages,
+    };
   };
+
+  const { pokemons, totalPages } = useMemo(
+    () => filter(),
+    [
+      searchState,
+      filteredGenerations,
+      filteredTypes,
+      filteringIsFavorite,
+      page,
+      favorites,
+    ],
+  );
 
   const handlePagination = (
     _event: React.ChangeEvent<unknown>,
@@ -107,7 +119,10 @@ const PokemonsPage: NextPage = () => {
       }}
     >
       <Stack sx={{ alignItems: 'center' }} spacing={2}>
-        <PokemonListToolbar />
+        <PokemonListToolbar
+          fetchedPokemonGenerations={fetchedPokemonGenerations}
+          fetchedPokemonTypes={fetchedPokemonTypes}
+        />
         <ImageList cols={isDownMd ? (isDownSm ? 1 : 3) : 4}>
           {pokemons.map((pokemon) => (
             <PokemonListItem
@@ -132,5 +147,33 @@ const PokemonsPage: NextPage = () => {
     </Paper>
   );
 };
+
+export async function getStaticProps() {
+  const pokemonsData = (
+    await apolloClient.query<PokemonsListData>({
+      query: POKEMONS_LIST_QUERY,
+    })
+  ).data;
+
+  const pokemonTypesData = (
+    await apolloClient.query<PokemonsTypesData>({
+      query: POKEMONS_TYPES_QUERY,
+    })
+  ).data;
+
+  const pokemonGenerationsData = (
+    await apolloClient.query<PokemonGenerationsData>({
+      query: POKEMONS_GENERATIONS_QUERY,
+    })
+  ).data;
+
+  return {
+    props: {
+      fetchedPokemons: pokemonsData.pokemon_v2_pokemon,
+      fetchedPokemonTypes: pokemonTypesData.pokemon_v2_type,
+      fetchedPokemonGenerations: pokemonGenerationsData.pokemon_v2_generation,
+    },
+  };
+}
 
 export default withLayout(PokemonsPage, 'minimal');

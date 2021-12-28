@@ -13,7 +13,6 @@ import {
   Typography,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { getPokemonGenerations, getPokemonTypes } from 'src/services';
 import { PokemonGeneration, PokemonType } from 'src/utils';
 import { useEffect, useState } from 'react';
 import {
@@ -30,7 +29,13 @@ import {
   setFilteredTypes,
 } from 'src/redux/slices';
 
-const PokemonListToolbar = () => {
+interface Props {
+  fetchedPokemonTypes: PokemonType[];
+  fetchedPokemonGenerations: PokemonGeneration[];
+}
+
+const PokemonListToolbar = (props: Props) => {
+  const { fetchedPokemonTypes, fetchedPokemonGenerations } = props;
   const dispatch = useAppDispatch();
   const searchState = useSearchState();
   const filteredGenerations = useFilteredGenerations();
@@ -44,8 +49,6 @@ const PokemonListToolbar = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const openMenu = Boolean(anchorEl);
-  const fetchedPokemonTypes = getPokemonTypes();
-  const fetchedPokemonGenerations = getPokemonGenerations();
 
   useEffect(() => {
     setPokemonTypes(fetchedPokemonTypes);

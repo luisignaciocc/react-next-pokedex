@@ -64,3 +64,14 @@ export const getPokemonDetails = async (
       console.error(err);
     });
 };
+
+export const getPokemonsIds = async (id: number): Promise<PokemonDetails> => {
+  return axios
+    .get(API_REST_URL + `/pokemon/${id}`)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+};
