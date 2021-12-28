@@ -21,12 +21,15 @@ export default class MyDocument extends Document {
             rel="preload"
             as="image"
             href="/images/pokedex-background.jpg"
-          ></link>
+          />
           <link
             rel="preload"
             as="image"
             href="/images/welcome-background.png"
-          ></link>
+          />
+          <link rel="preload" as="image" href="/images/pokemon-logo.png" />
+          <link rel="preload" as="image" href="/images/start.png" />
+          <link rel="preload" as="image" href="/images/pikachu-running.gif" />
           {/* Inject MUI styles first to match with the prepend: true configuration. */}
           {(this.props as any).emotionStyleTags}
         </Head>
