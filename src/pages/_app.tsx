@@ -38,7 +38,7 @@ const App = function MyApp({
     <React.Fragment>
       {/* // eslint-disable-next-line 
       @ts-ignore */}
-      <PersistGate persistor={store.__persistor} loading={ReduxLoader}>
+      <PersistGate persistor={store.__persistor} loading={<ReduxLoader />}>
         <CacheProvider value={emotionCache}>
           <Head>
             <title>Pokedex</title>

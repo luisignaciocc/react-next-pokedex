@@ -35,10 +35,10 @@ const PokemonListItem = (props: Props) => {
   const router = useRouter();
 
   const view = (id: number) => {
+    router.push(`/pokedex/${id}`);
     setWasClicked(true);
     setTimeout(() => {
       setWasClicked(false);
-      router.push(`/pokedex/${id}`);
     }, 80);
   };
   return (

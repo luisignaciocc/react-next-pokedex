@@ -7,7 +7,13 @@ const theme = createTheme({
     h4: {
       fontFamily: `"Press Start 2P"`,
     },
+    h5: {
+      fontFamily: `"Press Start 2P"`,
+    },
     subtitle2: {
+      fontFamily: `"Press Start 2P"`,
+    },
+    caption: {
       fontFamily: `"Press Start 2P"`,
     },
   },
