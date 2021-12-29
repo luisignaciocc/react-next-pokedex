@@ -15,9 +15,9 @@ The App allows you to:
 - Main View: Search by name, including fuzzy matching
 - Main View: Filter by type, including combinations
 - Main View: Filter by favourites
-- Main View: remove from favourites
 - Main View: Filter by game/version
-- Main View: add to favourites
+- Main View: Add to favourites
+- Main View: Remove from favourites
 - Main View: Paginate with 20 entries per page
 - Detail View: Display a detail of each Pokémon, the following fields are part of the entry view:
   - Abilities
@@ -28,8 +28,8 @@ The App allows you to:
   - Exp.
   - Height
   - Weight
-- Detail View: add to favourites
-- Detail View: remove from favourites
+- Detail View: Add to favourites
+- Detail View: Remove from favourites
 
 This app integrates [Next.js](https://nextjs.org/) with [Typescript](https://www.typescriptlang.org/), [Redux Toolkit](https://redux-toolkit.js.org) and [Material-UI](https://mui.com/).
 
@@ -46,7 +46,7 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 Clone the repository:
 
 ```bash
-https://github.com/luisignaciocc/react-next-pokedex.git
+git clone https://github.com/luisignaciocc/react-next-pokedex.git
 cd react-next-pokedex
 ```
 
